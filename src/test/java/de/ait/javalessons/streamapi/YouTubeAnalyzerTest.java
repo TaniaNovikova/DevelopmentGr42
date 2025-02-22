@@ -5,14 +5,19 @@ import java.util.List;
 
 
 class YouTubeAnalyzerTest {
+    List<YoutubeVideo> testVideos1 = List.of(
+            new YoutubeVideo("Обычное видео", "Regular Channel", 500_000, 8000, 600, "Спорт", false),
+            new YoutubeVideo("Ещё одно обычное видео", "Another Channel", 800_000, 10000, 1200, "Кулинария", false)
+    );
 
+    List<YoutubeVideo> testVideos2 = List.of(
+            new YoutubeVideo("Популярное видео", "Top Channel", 15_000_000, 12000, 720, "Образование", true),
+            new YoutubeVideo("Обычное видео", "Regular Channel", 500_000, 8000, 600, "Спорт", false)
+    );
     @Test
     void testIsMore10M_WhenVideoHasMoreThan10MViews() {
         // Arrange
-        List<YoutubeVideo> testVideos = List.of(
-                new YoutubeVideo("Популярное видео", "Top Channel", 15_000_000, 12000, 720, "Образование", true),
-                new YoutubeVideo("Обычное видео", "Regular Channel", 500_000, 8000, 600, "Спорт", false)
-        );
+       YouTubeAnalyzer.videos=testVideos2;
 
         // Act
         boolean result = YouTubeAnalyzer.isMore10M();
@@ -24,11 +29,8 @@ class YouTubeAnalyzerTest {
     @Test
     void testIsMore10M_WhenNoVideoHasMoreThan10MViews() {
         // Arrange
-        List<YoutubeVideo> testVideos = List.of(
-                new YoutubeVideo("Обычное видео", "Regular Channel", 500_000, 8000, 600, "Спорт", false),
-                new YoutubeVideo("Ещё одно обычное видео", "Another Channel", 800_000, 10000, 1200, "Кулинария", false)
-        );
 
+YouTubeAnalyzer.videos=testVideos1;
         // Act
         boolean result = YouTubeAnalyzer.isMore10M();
 
@@ -78,7 +80,7 @@ class YouTubeAnalyzerTest {
                 new YoutubeVideo("Vid2", "Chan2", 300_000, 2000, 300, "Cooking", false),
                 new YoutubeVideo("Vid3", "Chan3", 400_000, 3000, 400, "Education", true)
         );
-       // YouTubeAnalyzer.videos = testVideos;
+
         YouTubeAnalyzer.videos = testVideos;
 
         // Act

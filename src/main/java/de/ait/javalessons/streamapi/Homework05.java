@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+import java.util.LinkedList;
 
 public class Homework05 {
     public static List<String> countries = Arrays.asList("Germany", "France", "Brazil", "Argentina", "Canada", "China", "Australia", "India");
@@ -16,17 +17,38 @@ public class Homework05 {
     public static List<String> countries2 = Arrays.asList("Mexico", "Sweden", "Egypt");
 
     public static void main(String[] args) {
-        //  System.out.println(getCountriesWhoseNamesStartWithTheLetterC());
-        // System.out.println(getCitiesWhoseNamesAreLongerThan6Characters());
-        // System.out.println(getRiversWhoseNamesHaveAnEvenNumberOfLetters());
-        // System.out.println(getContinentsWhoseNamesAreShorterThan7Characters());
-        // System.out.println(getCountriesWhoseNamesConsistOf6Letters());
+         // System.out.println(getCountriesWhoseNamesStartWithTheLetterC());
+         //System.out.println(getRiversWhoseNamesHaveAnEvenNumberOfLetters());
+         //System.out.println(getContinentsWhoseNamesAreShorterThan7Characters());
+         //System.out.println(getCitiesWhoseNamesAreLongerThan6Characters());
+         //System.out.println(getCountriesWhoseNamesConsistOf6Letters());
         // System.out.println(getCountriesContainingTheLetterA(countries));
         // System.out.println(getCountriesContainingTheLetterA(countries1));
         //  System.out.println(getCountriesContainingTheLetterA(countries2));
         // System.out.println(getCitiesWhoseNamesEndWithO(cities1));
         // System.out.println(getRiversWhoseNamesContainMoreThan7Letters(rivers));
-        System.out.println(getContinentsWhoseNamesStartWithA(continents1));
+       // System.out.println(getContinentsWhoseNamesStartWithA(continents1));
+
+
+
+
+         LinkedList<String> stringLinkedList = new LinkedList<>();
+        stringLinkedList.add("Germany");
+        stringLinkedList.add("France");
+        stringLinkedList.add("Brazil");
+        stringLinkedList.add("Argentina");
+        stringLinkedList.add("Canada");
+        stringLinkedList.add("China");
+        stringLinkedList.add("Australia");
+
+        System.out.println(stringLinkedList);
+        //Using Stream API, filter the countries whose names start with the letter "C".
+       LinkedList<String> stringLinkedList1 = stringLinkedList.stream()
+               .filter(c->c.startsWith("C"))
+               .collect(Collectors.toCollection(LinkedList::new));
+        System.out.println(stringLinkedList1);
+
+
     }
 
     //1. Filtering Countries by First Letter
@@ -40,7 +62,7 @@ public class Homework05 {
     //Using **Stream API**, filter the cities whose names are longer than **6 characters**.
     public static List<String> getCitiesWhoseNamesAreLongerThan6Characters() {
         List<String> citiesWhoseNamesAreLongerThan6Characters = cities.stream()
-                .filter(city -> city.toCharArray().length > 6).collect(Collectors.toList());
+                .filter(city -> city.length() > 6).collect(Collectors.toList());
         return citiesWhoseNamesAreLongerThan6Characters;
     }
 
@@ -49,7 +71,7 @@ public class Homework05 {
 
     public static List<String> getRiversWhoseNamesHaveAnEvenNumberOfLetters() {
         List<String> riversWhoseNamesHaveAnEvenNumberOfLetters = rivers.stream()
-                .filter(river -> river.toCharArray().length % 2 == 0).collect(Collectors.toList());
+                .filter(river -> river.length() % 2 == 0).collect(Collectors.toList());
         return riversWhoseNamesHaveAnEvenNumberOfLetters;
     }
 
@@ -57,7 +79,7 @@ public class Homework05 {
 //Using **Stream API**, filter the continents whose **names are shorter than 7 characters**.
     public static List<String> getContinentsWhoseNamesAreShorterThan7Characters() {
         List<String> continentsWhoseNamesAreShorterThan7Characters = continents.stream()
-                .filter(continent -> continent.toCharArray().length < 7).collect(Collectors.toList());
+                .filter(continent -> continent.length() < 7).collect(Collectors.toList());
         return continentsWhoseNamesAreShorterThan7Characters;
     }
 
@@ -65,7 +87,7 @@ public class Homework05 {
     // Using **Stream API**, **filter** the countries whose names consist of **6 letters**.
     public static List<String> getCountriesWhoseNamesConsistOf6Letters() {
         List<String> countriesWhoseNamesConsistOf6Letters = countries1.stream()
-                .filter(country -> country.toCharArray().length == 6).collect(Collectors.toList());
+                .filter(country -> country.length() == 6).collect(Collectors.toList());
         return countriesWhoseNamesConsistOf6Letters;
     }
 
@@ -88,7 +110,7 @@ public class Homework05 {
     Using **Stream API**, filter the rivers whose names **contain more than 7 letters**.*/
     public static List<String> getRiversWhoseNamesContainMoreThan7Letters(List<String> rivers) {
         List<String> riversWhoseNamesContainMoreThan7Letters = rivers.stream()
-                .filter(river -> river.toCharArray().length > 7).collect(Collectors.toList());
+                .filter(river -> river.length() > 7).collect(Collectors.toList());
         return riversWhoseNamesContainMoreThan7Letters;
     }
 
@@ -99,4 +121,7 @@ public class Homework05 {
                 .filter(continent -> continent.startsWith("A")).collect(Collectors.toList());
         return continentsWhoseNamesStartWithA;
     }
+
+
+
 }
