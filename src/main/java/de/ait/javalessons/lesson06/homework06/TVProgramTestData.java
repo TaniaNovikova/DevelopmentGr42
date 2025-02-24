@@ -38,24 +38,21 @@ public class TVProgramTestData {
 //2)Transform `TVProgram` objects into user-friendly strings. For example,
 //format the string as:
 //"Channel: [channel] | Program: [programName] | Rating: [rating]"
-//        List<String> tvProgramList2=tvProgramList.stream()
-//                .map(p->p.toString()).peek(System.out::println)
-//                .collect(Collectors.toList());
-//        System.out.println("TVProgram` objects into user-friendly strings: "+" "+tvProgramList2);
 
-//        List<String> formattedPrograms1 = TVProgramTestData.getTVProgramList().stream()
-//                .map(tv -> String.format("Channel: %s | Program: %s | Rating: %.1f",
-//                        tv.getChannel(), tv.getProgramName(), tv.getRating()))
-//                .toList();
-//        formattedPrograms1.forEach(System.out::println);
+        List<String> formattedPrograms1 = TVProgramTestData.getTVProgramList().stream()
+                .map(tv -> String.format("Channel: %s | Program: %s | Rating: %.1f",
+                        tv.getChannel(), tv.getProgramName(), tv.getRating()))
+                .toList();
+        formattedPrograms1.forEach(System.out::println);
+        System.out.println("*************************************");
 
-//        List<String> formattedPrograms2 = TVProgramTestData.getTVProgramList().stream()
-//                .map(tv -> "Channel: " + tv.getChannel() +
-//                        " | Program: " + tv.getProgramName() +
-//                        " | Rating: " + tv.getRating())
-//                .toList();
-//
-//        formattedPrograms2.forEach(System.out::println);
+        List<String> formattedPrograms2 = TVProgramTestData.getTVProgramList().stream()
+                .map(tv -> "Channel: " + tv.getChannel() +
+                        " | Program: " + tv.getProgramName() +
+                        " | Rating: " + tv.getRating())
+                .toList();
+
+        formattedPrograms2.forEach(System.out::println);
 
         /****************3. Checking a Condition*********************/
 //Check if there is at least one program that is broadcast live (`isLive == true`).
@@ -78,11 +75,12 @@ public class TVProgramTestData {
 
         /**************5. Calculating the Average Rating***********************/
 
-      /*  OptionalDouble averageRating = tvProgramList.stream()
-                .mapToDouble(TVProgram::getRating)
-                .average();
-
-        averageRating.ifPresent(avg -> System.out.println("Average rating: " + avg));// 7.9125*/
+//       OptionalDouble averageRating = tvProgramList.stream()
+//                .mapToDouble(TVProgram::getRating)
+//                .peek(System.out::println)
+//                .average();
+//
+//        averageRating.ifPresent(avg -> System.out.println("Average rating: " + avg));// 7.9125
 
         /*************6. Grouping by Channel************************/
 //Use `Collectors.groupingBy(TVProgram::getChannel)` to create a map where the key
@@ -113,7 +111,7 @@ Channel: EduChannel
 
         /*************7. Sorting************************/
         //Sort the list of programs by channel name or by rating (e.g., in descending order).
-        System.out.println("sortedByChannleNameReverced");
+    /*    System.out.println("sortedByChannleNameReverced");
         List<TVProgram> sortedByChannleNameReverced = tvProgramList.stream()
                 .sorted(Comparator.comparing(TVProgram::getChannel, Comparator.reverseOrder()))
                 .collect(Collectors.toList());
@@ -135,7 +133,7 @@ List<TVProgram> sortedPrograms = tvProgramList.stream()
                         .thenComparing(TVProgram::getRating, Comparator.reverseOrder()))
                 .collect(Collectors.toList());
 
-        sortedPrograms.forEach(System.out::println);
+        sortedPrograms.forEach(System.out::println);*/
 
     }
 }
