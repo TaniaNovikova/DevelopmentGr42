@@ -1,4 +1,4 @@
-package de.ait.javalessons.threads;
+package de.ait.javalessons.lesson06.threads;
 
 
 public class DemoThreadRunnable implements Runnable {

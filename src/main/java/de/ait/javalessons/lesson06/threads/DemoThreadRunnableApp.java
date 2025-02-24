@@ -1,4 +1,4 @@
-package de.ait.javalessons.threads;
+package de.ait.javalessons.lesson06.threads;
 
     public class DemoThreadRunnableApp {
         public static void main(String[] args) {
