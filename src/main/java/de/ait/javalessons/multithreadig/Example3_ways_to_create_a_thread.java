@@ -1,6 +1,6 @@
 package de.ait.javalessons.multithreadig;
 
-public class Example3 {
+public class Example3_ways_to_create_a_thread {
     public static void main(String[] args) {
         //другой синтаксис создания потока: мы используем тут класс Thread
         Thread thread1 = new Thread(new MyThread3());

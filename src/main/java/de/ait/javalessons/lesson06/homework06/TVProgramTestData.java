@@ -27,11 +27,11 @@ public class TVProgramTestData {
 
         /* ******************1. Filtering by Rating*************************/
 //1)Find all programs with a rating above a specified threshold (e.g., > 8.0).
-//        List<String> tvProgramList1=tvProgramList.stream()
-//                .filter(p->p.getRating()>8)
-//                .map(p->p.getProgramName())
-//                .collect(java.util.stream.Collectors.toList());
-//        System.out.println("1) Programs with a rating above 8.0: "+ " "+tvProgramList1);
+        List<String> tvProgramList1=tvProgramList.stream()
+                .filter(p->p.getRating()>8)
+                .map(p->p.getProgramName())
+                .collect(Collectors.toList());
+        System.out.println("1) Programs with a rating above 8.0: "+ " "+tvProgramList1);
 
 
         /*****************2. Transforming Data Using `map`***************************/
@@ -56,43 +56,43 @@ public class TVProgramTestData {
 
         /****************3. Checking a Condition*********************/
 //Check if there is at least one program that is broadcast live (`isLive == true`).
-//        boolean isLiveExists = tvProgramList.stream().anyMatch(TVProgram::isLive);
-//        System.out.println("Live exists? " + isLiveExists);
+        boolean isLiveExists = tvProgramList.stream().anyMatch(TVProgram::isLive);
+        System.out.println("Live exists? " + isLiveExists);
 
         /*************** 4. Finding the Maximum Value**********************/
 //Determine the longest program (maximum value of the `duration` field).
 
-       /* Optional<TVProgram> longestProgram1 = tvProgramList.stream()
+        Optional<TVProgram> longestProgram1 = tvProgramList.stream()
                 .max(Comparator.comparingInt(TVProgram::getDuration));
         System.out.println(longestProgram1.get());
 
         longestProgram1.ifPresent(tv -> {
-            String formattedOutput = String.format("Program: %s | Duration: %.1f",
+            String formattedOutput = String.format("Program: %s | Duration: %d",
                     tv.getProgramName(),
-                    (double)   tv.getDuration());
+                     tv.getDuration());
             System.out.println(formattedOutput);
-        });*/
+        });
 
         /**************5. Calculating the Average Rating***********************/
 
-//       OptionalDouble averageRating = tvProgramList.stream()
-//                .mapToDouble(TVProgram::getRating)
-//                .peek(System.out::println)
-//                .average();
-//
-//        averageRating.ifPresent(avg -> System.out.println("Average rating: " + avg));// 7.9125
+       OptionalDouble averageRating = tvProgramList.stream()
+                .mapToDouble(TVProgram::getRating)
+                .peek(System.out::println)
+                .average();
+
+        averageRating.ifPresent(avg -> System.out.println("Average rating: " + avg));// 7.9125
 
         /*************6. Grouping by Channel************************/
 //Use `Collectors.groupingBy(TVProgram::getChannel)` to create a map where the key
 // is the channel name and the value is a list of programs on that channel.
 
-//        Map<String, java.util.List<TVProgram>> programsByChannel = tvProgramList.stream()
-//                .collect(Collectors.groupingBy(TVProgram::getChannel));
-//
-//        programsByChannel.forEach((channel, programList) -> {
-//            System.out.println("Channel: " + channel);
-//            programList.forEach(program -> System.out.println("  " + program));
-//        });
+        Map<String, List<TVProgram>> programsByChannel = tvProgramList.stream()
+                .collect(Collectors.groupingBy(TVProgram::getChannel));
+
+        programsByChannel.forEach((channel, programList) -> {
+            System.out.println("Channel: " + channel);
+            programList.forEach(program -> System.out.println("  " + program));
+        });
 
         /*Output:
         Channel: Channel One
@@ -111,7 +111,7 @@ Channel: EduChannel
 
         /*************7. Sorting************************/
         //Sort the list of programs by channel name or by rating (e.g., in descending order).
-    /*    System.out.println("sortedByChannleNameReverced");
+        System.out.println("sortedByChannleNameReverced");
         List<TVProgram> sortedByChannleNameReverced = tvProgramList.stream()
                 .sorted(Comparator.comparing(TVProgram::getChannel, Comparator.reverseOrder()))
                 .collect(Collectors.toList());
@@ -133,7 +133,7 @@ List<TVProgram> sortedPrograms = tvProgramList.stream()
                         .thenComparing(TVProgram::getRating, Comparator.reverseOrder()))
                 .collect(Collectors.toList());
 
-        sortedPrograms.forEach(System.out::println);*/
+        sortedPrograms.forEach(System.out::println);
 
     }
 }
