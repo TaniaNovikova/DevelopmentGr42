@@ -1,7 +1,7 @@
 package de.ait.javalessons.multithreadig;
 //volatile хорошо справляется со своим назначением, когда только один поток
 // изменяет значение, а другие потоки его только читают
-public class VolatileExample extends Thread{
+public class Example9b_Volatile extends Thread{
 volatile boolean b =  true;//после добавления ключевого
 // слова volatile потоки мэйн и тред1 не будут обращаться за значением этой
 // переменной к своему кэшу, а будут брать его значение только из
@@ -18,7 +18,7 @@ public void run(){
     System.out.println("Loop is finished. counter="+counter);
 }
     public static void main(String[] args) throws InterruptedException {
-      VolatileExample thread1 = new VolatileExample();
+      Example9b_Volatile thread1 = new Example9b_Volatile();
       thread1.start();
       Thread.sleep(3000);//метод sleep вызван НЕ на потоке
         // thread1, он вызван для потока MAIN, чтобы поток thread1
