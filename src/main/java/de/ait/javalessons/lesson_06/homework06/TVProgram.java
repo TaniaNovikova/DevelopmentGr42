@@ -1,4 +1,4 @@
-package de.ait.javalessons.lesson06.homework06;
+package de.ait.javalessons.lesson_06.homework06;
 
 public class TVProgram {
     private String channel;      // Название канала

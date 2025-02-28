@@ -1,4 +1,4 @@
-package de.ait.javalessons.lesson06.homework06;
+package de.ait.javalessons.lesson_06.homework06;
 
 import java.util.Arrays;
 import java.util.List;

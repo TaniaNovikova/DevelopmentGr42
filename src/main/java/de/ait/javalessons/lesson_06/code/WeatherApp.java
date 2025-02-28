@@ -1,0 +1,28 @@
+package de.ait.javalessons.lesson_06.code;
+
+public class WeatherApp {
+    public static void main(String[] args) {
+        //System.out.println(filterByTemperature(WeatherTestData.getWeatherList()));
+        System.out.println(findByTemperatureMoreTemp(WeatherTestData.getWeatherList(), 25));
+    }
+
+    //Задание 1: Фильтрация данных по температуре
+    // 1. Найти все записи (Weather), у которых температура опускается ниже нуля.
+    // 2. Вывести результат в удобном для вас формате (например, список или строку).
+    public static java.util.List<Weather> filterByTemperature(java.util.List<Weather> weatherList) {
+        return weatherList.stream()
+                .filter(weather -> weather.getTemperature() < 0)
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    /*
+    Задание 2: Проверка условий и нахождение максимума
+    Состоит из двух частей: 1. Определить,
+    есть ли хотя бы один город с температурой
+    выше определённого порога (например, 25 градусов).
+     */
+    public static boolean findByTemperatureMoreTemp(java.util.List<Weather> weatherList, int temperature) {
+        return weatherList.stream()
+                .anyMatch(weather -> weather.getTemperature() > temperature);
+    }
+}
