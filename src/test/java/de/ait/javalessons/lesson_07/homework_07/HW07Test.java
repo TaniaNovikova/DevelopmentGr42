@@ -3,10 +3,12 @@ package de.ait.javalessons.lesson_07.homework_07;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
-
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HW07Test {
+
 
     // 1. Тестирование метода сложения
     //Использовать аннотацию `@ParameterizedTest` и `@CsvSource`
@@ -17,6 +19,7 @@ class HW07Test {
             "10, -10, 0",
             "0, 0, 0"
     })
+    @DisplayName("Тестирование метода сложения")
     void testAdd(int a, int b, int expected) {
         HW07.Calculator calculator = new HW07.Calculator();
         assertEquals(expected, calculator.add(a, b));
@@ -27,7 +30,7 @@ class HW07Test {
 
     @ParameterizedTest
     @ValueSource(ints = {2, 0, -4})
-        // Тестируем только чётные числа
+    @DisplayName("Тестируем только чётные числа")
     void testIsEvenWithValueSource(int number) {
         HW07.Parity_check checker = new HW07.Parity_check();
         assertTrue(checker.isEven(number));
@@ -35,7 +38,7 @@ class HW07Test {
 
     @ParameterizedTest
     @ValueSource(ints = {1, -3, -5, 7, 19})
-        // Тестируем только нечётные числа
+    @DisplayName("Тестируем только нечётные числа")
     void testIsOddWithValueSource(int number) {
         HW07.Parity_check checker = new HW07.Parity_check();
         assertFalse(checker.isEven(number));
@@ -53,6 +56,7 @@ class HW07Test {
             "-6, 3, -2.0",
             "-8, -4, 2.0"
     })
+    @DisplayName("Тестирование метода деления")
     void testDivide(int a, int b, double expected) {
         HW07.Divider divider = new HW07().new Divider();
         assertEquals(expected, divider.divide(a, b));
@@ -71,6 +75,7 @@ class HW07Test {
             "'123()@/ß=<*+#!   ?', 18",
             ", 0"//null
     })
+    @DisplayName("Тестирование метода получения длины строки")
     void testGetLength(String str, int expected) {
         HW07.StringsLength stringsLength = new HW07().new StringsLength();
         assertEquals(expected, stringsLength.getStringsLength(str));
@@ -90,6 +95,8 @@ class HW07Test {
             "'lara', , false",//null
             "'lara', '', false"//empty string
     })
+    @DisplayName("Тестирование метода containsWord")
+
     void testContainsWord(String text, String word, boolean expected) {
         HW07.CheckingStrings checker = new HW07().new CheckingStrings();
         assertEquals(expected, checker.containsWord(text, word));
