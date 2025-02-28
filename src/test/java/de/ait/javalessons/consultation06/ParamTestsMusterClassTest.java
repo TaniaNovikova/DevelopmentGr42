@@ -46,9 +46,9 @@ public class ParamTestsMusterClassTest {
         assertEquals(expected, paramTestsMusterClass.add(a, b));
     }
 
-//    @ParameterizedTest
-//    @org.junit.jupiter.params.provider.CsvFileSource(resources = "/testdata/test.csv", numLinesToSkip = 1)
-//    void testAddFromFile(int a, int b, int expected) {
-//        assertEquals(expected, paramTestsMusterClass.add(a, b));
-//    }
+    @ParameterizedTest
+    @org.junit.jupiter.params.provider.CsvFileSource(resources = "/testdata/test.csv", numLinesToSkip = 1)
+    void testAddFromFile(int a, int b, int expected) {
+        assertEquals(expected, paramTestsMusterClass.add(a, b));
+    }
 }
