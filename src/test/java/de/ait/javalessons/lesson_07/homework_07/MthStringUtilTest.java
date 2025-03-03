@@ -2,7 +2,6 @@ package de.ait.javalessons.lesson_07.homework_07;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
 import org.junit.jupiter.api.DisplayName;

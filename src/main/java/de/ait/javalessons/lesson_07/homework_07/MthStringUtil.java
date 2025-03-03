@@ -1,5 +1,5 @@
 package de.ait.javalessons.lesson_07.homework_07;
-
+//@Slf4j
 public class MthStringUtil {
 
     public int add(int a, int b) {

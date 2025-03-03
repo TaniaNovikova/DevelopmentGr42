@@ -1,5 +1,4 @@
 package de.ait.javalessons.lesson_07.homework_07;
-
 public class HW07 {
     public static void main(String[] args) {
        // System.out.println(Divider.divide(10,3));
