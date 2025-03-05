@@ -2,9 +2,10 @@ package de.ait.javalessons.lesson_07.homework_07;
 public class HW07 {
     public static void main(String[] args) {
        // System.out.println(Divider.divide(10,3));
-        Calculator.add(2, 3);
+        //Calculator.add(2, 3);
         //System.out.println(StringsLength.getStringsLength(null));
-        System.out.println(CheckingStrings.containsWord("Mamamylaramu", "ramu"));
+
+        //System.out.println(CheckingStrings.containsWord("Mamamylaramu", "ramu"));
     }
     /*1: 1. Создать класс с методом `add(int a, int b)`.
         *  который принимает два целых числа и возвращает их сумму*/

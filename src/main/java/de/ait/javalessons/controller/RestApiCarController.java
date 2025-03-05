@@ -26,12 +26,14 @@ public class RestApiCarController {
     //2 этап: добавим правило, по которому к нам по сети может постучать кто-то,
     // кто хочет получить какую-то информацию (кто, сколько раз ...)
 //@RequestMapping(value = "/cars", method = RequestMethod.GET)
-    //т.е. в аннотации @RequestMapping мы указали, что метод должен быть GET, и если ты идешь по "/cars",
+    //т.е. в аннотации @RequestMapping мы указали, что метод должен быть GET,
+    // и если ты идешь по "/cars",
 // то контроллер знает, что по этому запросу надо выдать список автомобилей
 
     //Или можно использовать более короткую аннотацию:
     @GetMapping
-    Iterable<Car> getCars() {
+    //Iterable<Car> getCars() {
+    List<Car> getCars() {
         return carList;
     }
 
@@ -67,7 +69,6 @@ public class RestApiCarController {
                 new ResponseEntity<>(postCar(car), HttpStatus.CREATED) :
                 new ResponseEntity<>(car, HttpStatus.OK);
 
-        //return index == -1 ? postCar(car) : carList.get(index);
     }
 
     //удаление
@@ -75,6 +76,5 @@ public class RestApiCarController {
     void deleteCar(@PathVariable String id) {
         carList.removeIf(car -> car.getId().equals(id));
     }
-
 
 }
