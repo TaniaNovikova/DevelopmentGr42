@@ -35,4 +35,14 @@ public class Movie {
     public Long getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", genre='" + genre + '\'' +
+                ", year=" + year +
+                '}';
+    }
 }

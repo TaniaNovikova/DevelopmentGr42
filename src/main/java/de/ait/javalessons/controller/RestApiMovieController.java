@@ -63,17 +63,20 @@ public class RestApiMovieController {
             movieList.add(movie);
             // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
             return ResponseEntity.status(HttpStatus.CREATED).body(movie);
-        } else {
+        } else if (movie.getId() != movieList.size() + 1L) {
+            movie.setId(movieList.size() + 1L);
             movieList.add(movie);
+            log.info("Movie ID has been changed to: {}", movie.getId());
             return ResponseEntity.status(HttpStatus.CREATED).body(movie);
         }
-
+        movieList.add(movie);
+        return ResponseEntity.status(HttpStatus.CREATED).body(movie);
     }
 
     //3.4 (Опционально) DELETE /movies/{id} — удаляет фильм из списка по id.
     @DeleteMapping("/{id}")
     public ResponseEntity<Movie> deleteMovie(@PathVariable Long id) {
-     Optional<Movie> movieToDelete = movieList.stream().filter(m -> m.getId().equals(id)).findFirst();
+        Optional<Movie> movieToDelete = movieList.stream().filter(m -> m.getId().equals(id)).findFirst();
         Movie movie = movieToDelete.orElse(null);
         if (movie != null) {
             movieList.removeIf(m -> m.getId().equals(id));
