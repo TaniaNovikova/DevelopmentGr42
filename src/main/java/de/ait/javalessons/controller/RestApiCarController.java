@@ -3,12 +3,13 @@ package de.ait.javalessons.controller;
 import de.ait.javalessons.model.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.*;
 
-
-@RestController
-@RequestMapping("/cars")//общий адрес у всех методов
+@Slf4j//аннотация Lombok для автоматического создания логгера
+@RestController//аннотация Spring, указывающая, что этот класс явл. REST-контроллером
+@RequestMapping("/cars")//базовый путь для всех методов в этом контроллере
 public class RestApiCarController {
     private List<Car> carList = new ArrayList<>();
 
@@ -42,9 +43,11 @@ public class RestApiCarController {
     Optional<Car> getCarById(@PathVariable String id) {
         for (Car car : carList) {
             if (car.getId().equals(id)) {
+                log.info("Car found with id " + id);
                 return Optional.of(car);
             }
         }
+        log.info("Car not found with id " + id);
         return Optional.empty();
     }
 
