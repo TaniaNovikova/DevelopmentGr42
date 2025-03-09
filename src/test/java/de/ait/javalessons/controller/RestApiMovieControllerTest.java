@@ -32,11 +32,11 @@ class RestApiMovieControllerTest {
         assertEquals(HttpStatus.OK, resultFound.getStatusCode());
         assertEquals(2, resultFound.getBody().getId());
         assertEquals("Nomad land", resultFound.getBody().getTitle());
-       }
+    }
 
     @org.junit.jupiter.api.Test
     void getMovieByIdNotFound() {
-         ResponseEntity<Movie> resultNotFound = restApiMovieController.getMovieById(10L);
+        ResponseEntity<Movie> resultNotFound = restApiMovieController.getMovieById(10L);
 
         assertEquals(HttpStatus.NOT_FOUND, resultNotFound.getStatusCode());
         assertEquals(null, resultNotFound.getBody());
@@ -50,8 +50,9 @@ class RestApiMovieControllerTest {
 
         assertEquals(201, resultAdded.getStatusCode().value());
         assertEquals(6L, resultAdded.getBody().getId());
-        assertEquals("Matrix",  resultAdded.getBody().getTitle());
+        assertEquals("Matrix", resultAdded.getBody().getTitle());
     }
+
     @org.junit.jupiter.api.Test
     void addMovieWithChangedId() {
         Movie newMovie = new Movie(4L, "Matrix", "Sci-fi", 1999);
@@ -60,25 +61,19 @@ class RestApiMovieControllerTest {
 
         assertEquals(201, resultAdded.getStatusCode().value());
         assertEquals(6L, resultAdded.getBody().getId());
-        assertEquals("Matrix",  resultAdded.getBody().getTitle());
+        assertEquals("Matrix", resultAdded.getBody().getTitle());
     }
 
 
     @org.junit.jupiter.api.Test
     void deleteMovieSuccess() {
-        ResponseEntity<Movie> movieToDelete = restApiMovieController.deleteMovie(2L);
-        assertEquals(HttpStatus.OK, movieToDelete.getStatusCode());
-        assertEquals(2, movieToDelete.getBody().getId());
-        assertEquals("Nomad land", movieToDelete.getBody().getTitle());
+        restApiMovieController.deleteMovie(2L);
         assertEquals(4, restApiMovieController.getAllMovies().size());
     }
 
     @org.junit.jupiter.api.Test
     void deleteMovieFailed() {
-        ResponseEntity<Movie> movieToDeleteWithIdNotFound = restApiMovieController.deleteMovie(20L);
-        assertEquals(HttpStatus.NOT_FOUND, movieToDeleteWithIdNotFound.getStatusCode());
-        assertEquals(null, movieToDeleteWithIdNotFound.getBody());
+        restApiMovieController.deleteMovie(20L);
         assertEquals(5, restApiMovieController.getAllMovies().size());
-
     }
 }

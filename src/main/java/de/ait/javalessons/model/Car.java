@@ -1,23 +1,36 @@
 package de.ait.javalessons.model;
 
-public class Car {
-    private final String id; //final чтобы один раз сгенерированный id уже никогда не менялся
-    private String name;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
-    public Car(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    @jakarta.persistence.Entity
+    public class Car {
 
-    public String getId() {
-        return id;
-    }
+        @Id
+        private String id;
+        private String name;
 
-    public String getName() {
-        return name;
-    }
+        public Car() {
+        }
 
-    public void setName(String name) {
-        this.name = name;
+        public Car(String id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
     }
-}

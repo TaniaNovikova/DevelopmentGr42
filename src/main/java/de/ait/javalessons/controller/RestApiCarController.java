@@ -1,83 +1,114 @@
 package de.ait.javalessons.controller;
 
 import de.ait.javalessons.model.*;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
+import de.ait.javalessons.model.Car;
+import de.ait.javalessons.repositories.CarRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-@Slf4j//аннотация Lombok для автоматического создания логгера
-@RestController//аннотация Spring, указывающая, что этот класс явл. REST-контроллером
-@RequestMapping("/cars")//базовый путь для всех методов в этом контроллере
+@Slf4j // Аннотация Lombok для автоматического создания логгера
+@RestController // Аннотация Spring, указывающая, что этот класс является REST-контроллером
+@RequestMapping("/cars") // Базовый путь для всех методов в этом контроллере
 public class RestApiCarController {
-    private List<Car> carList = new ArrayList<>();
 
-    //1 этап:добавим конструктор, чтобы в лист попадало то, что мы хотим добавить
-    public RestApiCarController() {
-        carList.addAll(
+    private final CarRepository carRepository;
+
+
+    // Конструктор класса, инициализирующий список автомобилей
+    public RestApiCarController(CarRepository carRepository) {
+        this.carRepository = carRepository;
+
+        this.carRepository.saveAll(
                 List.of(
                         new Car("1", "BMW M1"),
                         new Car("2", "Audi A8"),
                         new Car("3", "Kia Spartage"),
-                        new Car("4", "Volvo960")
+                        new Car("4", "Volvo 960")
                 ));
     }
 
-    //2 этап: добавим правило, по которому к нам по сети может постучать кто-то,
-    // кто хочет получить какую-то информацию (кто, сколько раз ...)
-//@RequestMapping(value = "/cars", method = RequestMethod.GET)
-    //т.е. в аннотации @RequestMapping мы указали, что метод должен быть GET,
-    // и если ты идешь по "/cars",
-// то контроллер знает, что по этому запросу надо выдать список автомобилей
-
-    //Или можно использовать более короткую аннотацию:
+    /**
+     * Метод для получения всех автомобилей.
+     * GET-запрос на /cars
+     *
+     * @return список всех автомобилей
+     */
     @GetMapping
-    //Iterable<Car> getCars() {
-    List<Car> getCars() {
-        return carList;
+    Iterable<Car> getCars() {
+        return carRepository.findAll();
     }
 
-    //теперь мы хотим получить информацию только об одном автомобиле по его id
+
+    /**
+     * Метод для получения автомобиля по его ID.
+     * GET-запрос на /cars/{id}
+     *
+     * @param id идентификатор автомобиля
+     * @return Optional, содержащий автомобиль, если он найден, иначе пустой Optional
+     */
     @GetMapping("/{id}")
     Optional<Car> getCarById(@PathVariable String id) {
-        for (Car car : carList) {
-            if (car.getId().equals(id)) {
-                log.info("Car found with id " + id);
-                return Optional.of(car);
-            }
+        Optional<Car> carInDatabase = carRepository.findById(id);
+        if (carInDatabase.isPresent()) {
+            log.info("Car with id {} was found", id);
+            return carInDatabase;
         }
-        log.info("Car not found with id " + id);
+
+        log.info("Car with id {} was not found", id);
         return Optional.empty();
     }
 
-    //добавление автомобиля в список
+    /**
+     * Метод для добавления нового автомобиля.
+     * POST-запрос на /cars
+     *
+     * @param car объект автомобиля, переданный в теле запроса
+     * @return добавленный автомобиль
+     */
     @PostMapping
     Car postCar(@RequestBody Car car) {
-        carList.add(car);
-        return car;
+        Car saveResult = carRepository.save(car);
+        return saveResult;
     }
 
-    //изменение данных автомобиля с переданным в запросе конкретным id
+    /**
+     * Метод для обновления существующего автомобиля по его ID.
+     * PUT-запрос на /cars/{id}
+     *
+     * @param id  идентификатор автомобиля, который нужно обновить
+     * @param car объект автомобиля с новыми данными
+     * @return ResponseEntity с обновлённым автомобилем и статусом OK, если автомобиль найден,
+     *         или с новым автомобилем и статусом CREATED, если автомобиль не найден
+     */
     @PutMapping("/{id}")
     ResponseEntity<Car> putCar(@PathVariable String id, @RequestBody Car car) {
-        int index = -1;
-        for (Car carToFind : carList) {
-            if (carToFind.getId().equals(id)) {
-                index = carList.indexOf(carToFind);
-                carList.set(index, car);
-            }
+        if(carRepository.existsById(id)){
+            Car carToUpdate = carRepository.findById(id).get();
+            carToUpdate.setName(car.getName());
+            carToUpdate.setId(id);
+            Car savedCar = carRepository.save(carToUpdate);
+            return new ResponseEntity<>(savedCar, HttpStatus.OK);
         }
-        return (index == -1) ?
-                new ResponseEntity<>(postCar(car), HttpStatus.CREATED) :
-                new ResponseEntity<>(car, HttpStatus.OK);
+        else {
+            return new ResponseEntity<>(postCar(car), HttpStatus.CREATED);
+        }
 
     }
 
-    //удаление
+    /**
+     * Метод для удаления автомобиля по его ID.
+     * DELETE-запрос на /cars/{id}
+     *
+     * @param id идентификатор автомобиля, который нужно удалить
+     */
     @DeleteMapping("/{id}")
     void deleteCar(@PathVariable String id) {
-        carList.removeIf(car -> car.getId().equals(id));
+        carRepository.deleteById(id);
     }
-
 }

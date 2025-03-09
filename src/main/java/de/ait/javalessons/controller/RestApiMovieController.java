@@ -56,9 +56,10 @@ public class RestApiMovieController {
     @PostMapping
     public ResponseEntity<Movie> addMovie(@RequestBody Movie movie) {
         boolean exists = movieList.stream().anyMatch(m -> m.getId().equals(movie.getId()));
+        Long maxId = movieList.stream().map(m -> m.getId()).max(Long::compareTo).get();
         if (exists) {
             log.info("A movie with this id already exists: {}", movie.getId());
-            movie.setId(movieList.size() + 1L);
+            movie.setId(maxId + 1L);
             log.info("Movie ID has been changed to: {}", movie.getId());
             movieList.add(movie);
             // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -74,20 +75,27 @@ public class RestApiMovieController {
     }
 
     //3.4 (Опционально) DELETE /movies/{id} — удаляет фильм из списка по id.
+//    @DeleteMapping("/{id}")
+//    void deleteMovie(@PathVariable Long id) {
+//        movieList.removeIf(m -> m.getId().equals(id));
+//    }
+
+    //3.4 (Опционально) DELETE /movies/{id} — удаляет фильм из списка по id.
     @DeleteMapping("/{id}")
     public ResponseEntity<Movie> deleteMovie(@PathVariable Long id) {
         Optional<Movie> movieToDelete = movieList.stream().filter(m -> m.getId().equals(id)).findFirst();
         Movie movie = movieToDelete.orElse(null);
         if (movie != null) {
-            movieList.removeIf(m -> m.getId().equals(id));
+            movieList.remove(movie);
             log.info("Movie with id {} has been deleted", id);
             return ResponseEntity.ok(movie);
         } else {
             log.error("Movie to delete with id {} not found", id);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-    }
 
+
+    }
 }
 
 

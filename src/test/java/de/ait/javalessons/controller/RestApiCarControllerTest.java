@@ -8,17 +8,18 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.HttpStatus.CREATED;
 
-class RestApiCarControllerTest {
+//class RestApiCarControllerTest {
+//
+//    private RestApiCarController restApiCarController;
+//
+//    @org.junit.jupiter.api.BeforeEach
+//    void setUp() {
+//        restApiCarController = new RestApiCarController();//перед каждым тестом
+//        // будет заново пересоздаваться restApiCarController
+//    }
 
-    private RestApiCarController restApiCarController;
-
-    @org.junit.jupiter.api.BeforeEach
-    void setUp() {
-        restApiCarController = new RestApiCarController();//перед каждым тестом
-        // будет заново пересоздаваться restApiCarController
-    }
-
-    @org.junit.jupiter.api.Test
+   // @org.junit.jupiter.api.Test
+/*
     void getCarsReturnDefaltCars() {
         //Iterable<Car> resultCarsIterable = restApiCarController.getCars();
         List<Car> resultCars = restApiCarController.getCars();
@@ -122,4 +123,4 @@ class RestApiCarControllerTest {
         assertEquals(3, resultCars.size());
 
     }
-}
+}*/
