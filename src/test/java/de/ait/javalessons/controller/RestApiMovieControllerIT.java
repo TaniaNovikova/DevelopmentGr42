@@ -17,33 +17,10 @@ public class RestApiMovieControllerIT {
     private TestRestTemplate restTemplate;
     private List<Movie> movieList;
 
-    @BeforeEach
-    public void setUp() {
-        restTemplate.delete("/movies/reset");
-        movieList = new ArrayList<>();  // Новый список для каждого теста
-        movieList.addAll(
-                List.of(new Movie(1L, "Parasite", "Thriller", 2019),
-                        new Movie(2L, "Nomad land", "Drama", 2020),
-                        new Movie(3L, "The Shape of Water", "Fantasy", 2017),
-                        new Movie(4L, "Green Book", "Biography", 2018),
-                        new Movie(5L, "Everything Everywhere All at Once", "Sci-Fi", 2022)
-                )
-        );
-    }
-
 
     @Test
     public void testGetAllMovies() {
-        restTemplate.delete("/movies/reset");
-        movieList = new ArrayList<>();  // Новый список
-        movieList.addAll(
-                List.of(new Movie(1L, "Parasite", "Thriller", 2019),
-                        new Movie(2L, "Nomad land", "Drama", 2020),
-                        new Movie(3L, "The Shape of Water", "Fantasy", 2017),
-                        new Movie(4L, "Green Book", "Biography", 2018),
-                        new Movie(5L, "Everything Everywhere All at Once", "Sci-Fi", 2022)
-                )
-        );
+
         ResponseEntity<Movie[]> response = restTemplate.getForEntity("/movies", Movie[].class);
         assertEquals(200, response.getStatusCodeValue());
         assertNotNull(response.getBody().length);
@@ -77,16 +54,7 @@ public class RestApiMovieControllerIT {
 
     @Test
     public void testAddMovieWithExistingId() {
-        restTemplate.delete("/movies/reset");
-        movieList = new ArrayList<>();  // Новый список для каждого теста
-        movieList.addAll(
-                List.of(new Movie(1L, "Parasite", "Thriller", 2019),
-                        new Movie(2L, "Nomad land", "Drama", 2020),
-                        new Movie(3L, "The Shape of Water", "Fantasy", 2017),
-                        new Movie(4L, "Green Book", "Biography", 2018),
-                        new Movie(5L, "Everything Everywhere All at Once", "Sci-Fi", 2022)
-                )
-        );
+
         Movie newMovie = new Movie(1L, "Interstellar", "Sci-Fi", 2014);
         ResponseEntity<Movie> response = restTemplate.postForEntity("/movies", newMovie, Movie.class);
 
@@ -97,16 +65,7 @@ public class RestApiMovieControllerIT {
 
     @Test
     public void testAddMovieWithIncorrectId() {
-        restTemplate.delete("/movies/reset");
-        movieList = new ArrayList<>();  // Новый список для каждого теста
-        movieList.addAll(
-                List.of(new Movie(1L, "Parasite", "Thriller", 2019),
-                        new Movie(2L, "Nomad land", "Drama", 2020),
-                        new Movie(3L, "The Shape of Water", "Fantasy", 2017),
-                        new Movie(4L, "Green Book", "Biography", 2018),
-                        new Movie(5L, "Everything Everywhere All at Once", "Sci-Fi", 2022)
-                )
-        );
+
         Movie newMovie = new Movie(10L, "The Matrix", "Action", 1999);
         ResponseEntity<Movie> response = restTemplate.postForEntity("/movies", newMovie, Movie.class);
 
@@ -118,9 +77,11 @@ public class RestApiMovieControllerIT {
     @Test
     public void testDeleteMovieFailed() {
         restTemplate.delete("/movies/20");
-
-        ResponseEntity<Movie> response = restTemplate.getForEntity("/movies/20", Movie.class);
+        ResponseEntity<Movie> response = restTemplate.exchange(
+                "/movies/20", HttpMethod.DELETE, null, Movie.class);//ожидаем ответ 404 при запуске метода удаления
         assertEquals(404, response.getStatusCodeValue());
+        assertNull(response.getBody());
+
     }
 
     @Test

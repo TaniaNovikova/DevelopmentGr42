@@ -103,4 +103,3 @@ public class RestApiCarControllerIT {
         assertEquals("Tesla Model S", response.getBody().getName());
     }
 }
-
