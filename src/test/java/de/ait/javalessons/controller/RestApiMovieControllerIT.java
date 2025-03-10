@@ -76,7 +76,6 @@ public class RestApiMovieControllerIT {
 
     @Test
     public void testDeleteMovieFailed() {
-        restTemplate.delete("/movies/20");
         ResponseEntity<Movie> response = restTemplate.exchange(
                 "/movies/20", HttpMethod.DELETE, null, Movie.class);//ожидаем ответ 404 при запуске метода удаления
         assertEquals(404, response.getStatusCodeValue());
@@ -89,6 +88,7 @@ public class RestApiMovieControllerIT {
         restTemplate.delete("/movies/1");
         ResponseEntity<Movie> responseGetForEntity = restTemplate.getForEntity("/movies/1", Movie.class);//ищем удаленный фильм в списке
         assertEquals(404, responseGetForEntity.getStatusCodeValue());//фильм удален)=>не найден
+
         ResponseEntity<Movie> response = restTemplate.exchange(
                 "/movies/2", HttpMethod.DELETE, null, Movie.class);//ожидаем ответ 200 при запуске метода удаления
         Movie deletedMovie = response.getBody();
