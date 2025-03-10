@@ -17,13 +17,15 @@ import java.util.Optional;
 @RequestMapping("/cars") // Базовый путь для всех методов в этом контроллере
 public class RestApiCarController {
 
-    private final CarRepository carRepository;
+    private final CarRepository carRepository; //привязываем ссылку на наш репоиторий
 
 
     // Конструктор класса, инициализирующий список автомобилей
+    //принимает в качестве параметра наш репозиторий
     public RestApiCarController(CarRepository carRepository) {
-        this.carRepository = carRepository;
+        this.carRepository = carRepository;//инициализирует репозиторий при старте
 
+//формируем лист на сохранение, а репозиторий забрасывает эти данные в бд
         this.carRepository.saveAll(
                 List.of(
                         new Car("1", "BMW M1"),
