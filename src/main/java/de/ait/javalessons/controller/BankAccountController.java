@@ -42,10 +42,6 @@ public class BankAccountController {
     }
 
 
-//    @PostMapping
-//    public void transfer(@RequestParam Long fromAccountId, @RequestParam Long toAccountId, @RequestParam double amount) {
-//        bankAccountService.transfer(fromAccountId, toAccountId, amount);
-//    }
 
 
     // @GetMapping
@@ -67,5 +63,17 @@ public class BankAccountController {
     public ResponseEntity<Double> withdraw(@PathVariable Long id, @RequestParam double amount) {
         log.info("Withdrawing {} from bank account with id {}", amount, id);
         return ResponseEntity.ok(bankAccountService.withdraw(amount, id));
+    }
+
+    //перевод с одного счета на другой:
+    @PostMapping("/{fromAccountId}/{toAccountId}/transfer")
+    public void transfer(@RequestParam Long fromAccountId, @RequestParam Long toAccountId, @RequestParam double amount) {
+        bankAccountService.transfer(fromAccountId, toAccountId, amount);
+    }
+
+    //закрытие счета по id, с проверкой: удаляет только в том случае, если баланс равен 0
+    @DeleteMapping("/{id}/closeAccount")
+    public void closeAccount(@RequestParam Long bankAccountId) {
+        bankAccountService.closeAccount(bankAccountId);
     }
 }

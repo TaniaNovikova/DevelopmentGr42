@@ -68,7 +68,7 @@ public class BankAccountService {
 
     @Transactional
     public double withdraw(double amount, Long bankAccountId) {
-        de.ait.javalessons.model.BankAccount bankAccount = bankAccountRepository.findById(bankAccountId)
+        BankAccount bankAccount = bankAccountRepository.findById(bankAccountId)
                 .orElseThrow(() -> new IllegalArgumentException("Bank account not found"));
         if (amount <= 0) {
             throw new IllegalArgumentException("Amount must be greater than 0");
@@ -102,6 +102,9 @@ public class BankAccountService {
         if (amount > fromAccount.getBalance()) {
             throw new IllegalArgumentException("Insufficient funds");
         }
+//        if (amount > maxWithdrawalAmount) {
+//            throw new IllegalArgumentException("Cannot withdraw more than " + maxWithdrawalAmount);
+//        }
 
         fromAccount.setBalance(fromAccount.getBalance() - amount);
         toAccount.setBalance(toAccount.getBalance() + amount);
