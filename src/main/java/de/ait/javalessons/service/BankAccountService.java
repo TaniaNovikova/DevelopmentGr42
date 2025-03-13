@@ -41,19 +41,23 @@ public class BankAccountService {
         bankAccountRepository.saveAll(accounts);
 
     }
+    /* 1.***********************************get a list of all accounts****************************************** */
 
     public List<BankAccount> getAllBankAccounts() {
         return bankAccountRepository.findAll();
     }
+    /* 2.***********************************find an account by its id****************************************** */
 
     public Optional<BankAccount> findBankAccountById(Long id) {
         return bankAccountRepository.findById(id);
     }
+    /* 3.***********************************open an account****************************************** */
 
     public BankAccount saveNewBankAccount(BankAccount bankAccount) {
         return bankAccountRepository.save(bankAccount);
     }
 
+    /* 4.***********************************deposit amount into account****************************************** */
 
     @Transactional
     public double deposit(double amount, Long bankAccountId) {
@@ -65,6 +69,7 @@ public class BankAccountService {
         bankAccount.setBalance(bankAccount.getBalance() + amount);
         return bankAccountRepository.save(bankAccount).getBalance();
     }
+    /* 5.***********************************withdrawal from account****************************************** */
 
     @Transactional
     public double withdraw(double amount, Long bankAccountId) {
@@ -85,6 +90,7 @@ public class BankAccountService {
         bankAccount.setBalance(bankAccount.getBalance() - amount);
         return bankAccountRepository.save(bankAccount).getBalance();
     }
+    /* 6.*****************************transfer from one account to another********************************** */
 
     @Transactional
     public void transfer(Long fromAccountId, Long toAccountId, double amount) {
@@ -102,9 +108,6 @@ public class BankAccountService {
         if (amount > fromAccount.getBalance()) {
             throw new IllegalArgumentException("Insufficient funds");
         }
-//        if (amount > maxWithdrawalAmount) {
-//            throw new IllegalArgumentException("Cannot withdraw more than " + maxWithdrawalAmount);
-//        }
 
         fromAccount.setBalance(fromAccount.getBalance() - amount);
         toAccount.setBalance(toAccount.getBalance() + amount);
@@ -112,6 +115,9 @@ public class BankAccountService {
         bankAccountRepository.save(fromAccount);
         bankAccountRepository.save(toAccount);
     }
+
+    /* 7.***********************************closeAccount****************************************** */
+
 
     @Transactional
     public void closeAccount(Long bankAccountId) {
@@ -122,4 +128,16 @@ public class BankAccountService {
         }
         bankAccountRepository.delete(bankAccount);
     }
+    /* 8.***********************************updateOwnerName****************************************** */
+
+    @Transactional
+    public void updateOwnerName(Long accountId, String newOwnerName) {
+        BankAccount bankAccount = bankAccountRepository.findById(accountId)
+                .orElseThrow(() -> new IllegalArgumentException("Bank account not found"));
+        bankAccount.setOwnerName(newOwnerName);
+        bankAccountRepository.save(bankAccount);
+    }
+
+
+
 }

@@ -20,6 +20,7 @@ public class BankAccountController {
     public BankAccountController(BankAccountService bankAccountService) {
         this.bankAccountService = bankAccountService;
     }
+    /* 1.***********************************get a list of all accounts****************************************** */
 
     @GetMapping
     public ResponseEntity<List<BankAccount>> getAllBankAccounts() {
@@ -27,6 +28,16 @@ public class BankAccountController {
         log.info("Found {} bank accounts", bankAccounts.size());
         return ResponseEntity.ok(bankAccounts);
     }
+    /* 2.***********************************find an account by its id****************************************** */
+
+    @GetMapping("/account") // Получение одного аккаунта по ID GET /account?id=1
+    public ResponseEntity<BankAccount> getBankAccountById(@RequestParam Long id) {
+        log.info("Getting bank account with id {}", id);
+        return bankAccountService.findBankAccountById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(org.springframework.http.HttpStatus.NOT_FOUND).body(null));
+    }
+    /* 3.***********************************open an account****************************************** */
 
     @PostMapping
     public ResponseEntity<BankAccount> createBankAccount(@RequestParam String accountNumber,
@@ -41,39 +52,38 @@ public class BankAccountController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedBankAccount);
     }
 
+    /* 4.***********************************deposit amount into account****************************************** */
 
-
-
-    // @GetMapping
-   @GetMapping("/account") // Получение одного аккаунта по ID GET /account?id=1
-   public ResponseEntity<BankAccount> getBankAccountById(@RequestParam Long id) {
-        log.info("Getting bank account with id {}", id);
-        return bankAccountService.findBankAccountById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(org.springframework.http.HttpStatus.NOT_FOUND).body(null));
-    }
 
     @PostMapping("/{id}/deposit")
     public ResponseEntity<Double> deposit(@PathVariable Long id, @RequestParam double amount) {
         log.info("Depositing {} to bank account with id {}", amount, id);
         return ResponseEntity.ok(bankAccountService.deposit(amount, id));
     }
+    /* 5.***********************************withdrawal from account****************************************** */
 
     @PostMapping("/{id}/withdraw")
     public ResponseEntity<Double> withdraw(@PathVariable Long id, @RequestParam double amount) {
         log.info("Withdrawing {} from bank account with id {}", amount, id);
         return ResponseEntity.ok(bankAccountService.withdraw(amount, id));
     }
+    /* 6.*****************************transfer from one account to another********************************** */
 
-    //перевод с одного счета на другой:
     @PostMapping("/{fromAccountId}/{toAccountId}/transfer")
     public void transfer(@RequestParam Long fromAccountId, @RequestParam Long toAccountId, @RequestParam double amount) {
         bankAccountService.transfer(fromAccountId, toAccountId, amount);
     }
+    /* 7.***********************************closeAccount****************************************** */
 
     //закрытие счета по id, с проверкой: удаляет только в том случае, если баланс равен 0
     @DeleteMapping("/{id}/closeAccount")
     public void closeAccount(@RequestParam Long bankAccountId) {
         bankAccountService.closeAccount(bankAccountId);
+    }
+    /* 8.***********************************updateOwnerName****************************************** */
+
+    @PatchMapping("/{accountId}/{newName}")
+    public void updateBankAccount(@PathVariable Long accountId, @PathVariable String newName) {
+        bankAccountService.updateOwnerName(accountId, newName);
     }
 }
