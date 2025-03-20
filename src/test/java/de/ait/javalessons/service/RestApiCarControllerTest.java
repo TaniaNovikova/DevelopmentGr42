@@ -1,4 +1,4 @@
-package de.ait.javalessons.controller;
+package de.ait.javalessons.service;
 /*
 
 import de.ait.javalessons.model.Car;

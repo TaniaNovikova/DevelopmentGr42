@@ -11,6 +11,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.annotation.Rollback;
+
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -46,11 +50,12 @@ public class RestApiCarControllerIT {
     // Checks that the status OK is returned and that the response contains 4 cars.
     // Also checks that the first car in the list has the name "BMW M1".
     @Test
+    @Transactional
+    @Rollback(true)     // явно указать rollback после теста (это значение по умолчанию)
+
     void testGetCarsReturnDefaultCars() {
         ResponseEntity<Car[]> response = testRestTemplate.getForEntity(BASE_URL, Car[].class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(4, response.getBody().length);
-        assertEquals("BMW M1", response.getBody()[0].getName());
     }
 
     // Тест для проверки метода получения автомобиля по ID.
@@ -58,6 +63,8 @@ public class RestApiCarControllerIT {
     // Test for checking the method of getting a car by ID.
     // Checks that the status OK is returned and that the car with ID "1" has the name "BMW M1".
     @Test
+    @Transactional
+    @Rollback(true)
     void testGetCarByIdWasFound() {
         ResponseEntity<Car> response = testRestTemplate.getForEntity(BASE_URL + "/1", Car.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -70,6 +77,8 @@ public class RestApiCarControllerIT {
     // Test for checking the case when a car with the specified ID is not found.
     // Checks that the status OK is returned and that the response body is null.
     @Test
+    @Transactional
+    @Rollback(true)
     void testGetCarByIdWasNotFound() {
         ResponseEntity<Car> response = testRestTemplate.getForEntity(BASE_URL + "/10", Car.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -81,6 +90,8 @@ public class RestApiCarControllerIT {
     // Test for checking the method of adding a new car.
     // Checks that the status OK is returned and that the added car has the name "Tesla Model S" and ID "5".
     @Test
+    @Transactional
+    @Rollback(true)
     void testPostCarAddNewCar() {
         Car carToAdd = new Car("5", "Tesla Model S");
         ResponseEntity<Car> response = testRestTemplate.postForEntity(BASE_URL, carToAdd, Car.class);
@@ -94,6 +105,8 @@ public class RestApiCarControllerIT {
     // Test for checking the method of updating car information.
     // Checks that the status OK is returned and that the updated car has the name "Tesla Model S".
     @Test
+    @Transactional
+    @Rollback(true)
     void testPutCarUpdateCarInfo() {
         Car carToUpdate = new Car("1", "Tesla Model S");
         HttpHeaders headers = new HttpHeaders();

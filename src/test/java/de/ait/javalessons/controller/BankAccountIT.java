@@ -1,9 +1,8 @@
-package de.ait.javalessons;
+package de.ait.javalessons.controller;
 
 import de.ait.javalessons.model.*;
 import de.ait.javalessons.repositories.*;
 import org.junit.jupiter.api.*;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.context.*;
 import org.springframework.boot.test.web.client.*;
 import org.springframework.http.*;
@@ -12,6 +11,10 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.http.HttpStatus.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import de.ait.javalessons.service.BankAccountService;
+
+
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class BankAccountIT {
@@ -23,11 +26,12 @@ class BankAccountIT {
     private BankAccountRepository bankAccountRepository;
 
     private BankAccount testAccount;
-    @org.springframework.beans.factory.annotation.Autowired
-    private de.ait.javalessons.service.BankAccountService bankAccountService;
+    @Autowired
+    private BankAccountService bankAccountService;
 
     @BeforeEach
     void setUp() {
+      //  bankAccountRepository.deleteAll();
         testAccount = bankAccountRepository.findAll().get(0);
     }
 

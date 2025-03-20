@@ -1,4 +1,4 @@
-package de.ait.javalessons.controller;
+package de.ait.javalessons.service;
 
 import de.ait.javalessons.model.*;
 import org.junit.jupiter.api.*;
@@ -9,11 +9,11 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RestApiMovieControllerTest {
-    private RestApiMovieController restApiMovieController;
+    private de.ait.javalessons.controller.RestApiMovieController restApiMovieController;
 
     @BeforeEach
     void setUp() {
-        restApiMovieController = new RestApiMovieController();//перед каждым тестом
+        restApiMovieController = new de.ait.javalessons.controller.RestApiMovieController();//перед каждым тестом
         // будет заново пересоздаваться restApiMovieController
     }
 
